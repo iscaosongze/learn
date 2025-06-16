@@ -29,10 +29,11 @@ extern HwStru _Hw[];
  *
  ************************************************
  */
-/* Ïß³Ì´´½¨ */
+//æµ‹è¯•pull
+/* çº¿ç¨‹åˆ›å»º */
 BaseType_t Task_Create(void){
 BaseType_t xReturn = pdPASS;
- /* ÏÔÊ¾°æ±¾ */
+ /* æ˜¾ç¤ºç‰ˆæœ¬ */
     uint8 ver = Version[0] &0x0FF;
     ver = (ver>>4)*10 + (ver&0x0F); 
     
@@ -111,7 +112,7 @@ BaseType_t xReturn = pdPASS;
     }  
     vTaskDelay(1000);
 	  taskENTER_CRITICAL();
-/* ×ÓÉè±¸×´Ì¬Ë¢ĞÂÏß³Ì */
+/* å­è®¾å¤‡çŠ¶æ€åˆ·æ–°çº¿ç¨‹ */
 		xReturn = xTaskCreate((TaskFunction_t )Sys_Task,   
 							  (const char* )"SysTsk",                     /* Task name */
 							  (uint16_t )256,   						              /* Stack size */
@@ -123,7 +124,7 @@ BaseType_t xReturn = pdPASS;
 		    return pdFAIL;
 		} 
         
-/* 8Æ¬LCMÀÏ»¯Ïß³Ì */
+/* 8ç‰‡LCMè€åŒ–çº¿ç¨‹ */
     for(int ai = 0; ai< AGING_CH_MAX; ai++){
         xReturn = xTaskCreate((TaskFunction_t )Aging_Task,   
                     (const char* )"AgingTsk",                /* Task name */
@@ -136,7 +137,7 @@ BaseType_t xReturn = pdPASS;
             return pdFAIL;
         }         
     }
-/* State LED Ïß³Ì */   
+/* State LED çº¿ç¨‹ */   
 		xReturn = xTaskCreate((TaskFunction_t )Led_Task,   
 							  (const char* )"LedTsk",                     /* Task name */
 							  (uint16_t )256,   						              /* Stack size */
@@ -151,7 +152,7 @@ BaseType_t xReturn = pdPASS;
     return pdPASS;    
 }  
 
-/* ÀÏ»¯Ïß³Ì */
+/* è€åŒ–çº¿ç¨‹ */
 void Aging_Task(void * argument){ 
 AgingStru *aging = (AgingStru *)argument; 
   vTaskSetApplicationTaskTag( NULL, ( void * ) aging );
@@ -161,7 +162,7 @@ AgingStru *aging = (AgingStru *)argument;
      }
 }
 
-/* °´¼ü¼ì²â¡¢×´Ì¬Ö¸Ê¾Ïß³Ì */
+/* æŒ‰é”®æ£€æµ‹ã€çŠ¶æ€æŒ‡ç¤ºçº¿ç¨‹ */
 BOOL isKeyBusy(void){
 BOOL bBusy = FALSE;
     for(int ai = 0; ai < AGING_CH_MAX; ai++){
